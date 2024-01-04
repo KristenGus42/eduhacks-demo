@@ -1,0 +1,15 @@
+/*Given Code*/
+#output {
+  width : 325px;
+  height: 350px;
+  background-color: lavender;
+  overflow: scroll;
+  padding: 30px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,20 +1,46 @@
-import OpenAI from "openai";
+// DEMO CODE
+'use strict';
+(function() {
 
-const openai = new OpenAI();
+  window.addEventListener("load", init);
 
-const messages = [];
+  function init() {
+    document.getElementById("chat-btn").addEventListener("click", beginChat);
+  }
 
-export async function chat(query) {
-  messages.push({ role: "user", content: query });
+  async function beginChat() {
+    // Display user input
+    let input = document.getElementById("input").value;
+    let userChat = document.createElement("p");
+    userChat.textContent =  "YOU: " + input;
+    document.getElementById("output").appendChild(userChat);
+    document.getElementById("input").value = "";
 
-  console.log("Waiting for response...");
-  const completion = await openai.chat.completions.create({
-    messages: messages,
-    model: "gpt-3.5-turbo",
-  });
+    // Request user input
+    try {
+      let response = await fetch("/response/" + input);
+      await statusCheck(response);
+      response = await response.text();
+      displayBot(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  console.log("Tokens used: " + completion.usage.total_tokens);
-  messages.push({ role: "assistant", content: completion.choices[0].message.content });
+  function displayBot(res) {
+    // Display bot response
+    let botChat = document.createElement("p");
+    botChat.textContent = "CHAT BOT: "  + res;
+    document.getElementById("output").appendChild(botChat);
+  }
 
-  return messages;
-}
+  // Given
+  async function statusCheck(res) {
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+    return res;
+  }
+
+
+})();
