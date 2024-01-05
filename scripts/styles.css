@@ -1,4 +1,4 @@
-/*Given Code*/
+/*Styles the output box*/
 #output {
   width : 325px;
   height: 350px;
@@ -7,6 +7,7 @@
   padding: 30px;
 }
 
+/*Centers and aligns output box and form*/
 main {
   display: flex;
   flex-direction: column;

@@ -1,22 +1,27 @@
-// DEMO CODE
 'use strict';
 (function() {
 
+  // GIVEN
   window.addEventListener("load", init);
 
+  // 4: DEMO -> event listeners
   function init() {
-    document.getElementById("chat-btn").addEventListener("click", beginChat);
+    document.getElementById("chat-btn").addEventListener("click", displayUser);
   }
 
-  async function beginChat() {
-    // Display user input
+  // 5: DEMO -> Display user input
+  async function displayUser() {
     let input = document.getElementById("input").value;
     let userChat = document.createElement("p");
     userChat.textContent =  "YOU: " + input;
     document.getElementById("output").appendChild(userChat);
     document.getElementById("input").value = "";
+    // 6: DEMO -> Fetch response from our app.js backend
+    fetchRespnse(input);
+  }
 
-    // Request user input
+  // 6: DEMO -> Fetch response from our app.js backend
+  async function fetchRespnse(input) {
     try {
       let response = await fetch("/response/" + input);
       await statusCheck(response);
@@ -27,14 +32,14 @@
     }
   }
 
+  // 7: DEMO -> Display bot response
   function displayBot(res) {
-    // Display bot response
     let botChat = document.createElement("p");
     botChat.textContent = "CHAT BOT: "  + res;
     document.getElementById("output").appendChild(botChat);
   }
 
-  // Given
+  // GIVEN
   async function statusCheck(res) {
     if (!res.ok) {
       throw new Error(await res.text());
